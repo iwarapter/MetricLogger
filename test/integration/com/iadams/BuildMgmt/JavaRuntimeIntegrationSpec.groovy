@@ -10,7 +10,7 @@ class JavaRuntimeIntegrationSpec extends IntegrationSpec {
 	def "Saving our first JavaRuntime to the database"() {
 		
 		given: "A brand new machine"
-		def runtime = new JavaRuntime(name: "Java(TM) SE Runtime Environment", version: "1.6")
+		def runtime = new JavaRuntime(name: "Java(TM) SE Runtime Environment", ver: "1.6")
 		
 		when: "we save the user"
 		runtime.save()

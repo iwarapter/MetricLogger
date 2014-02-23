@@ -6,6 +6,8 @@ class JavaVirtualMachine {
 	String ver
 	String vendor
 	
+	static hasMany = [ java : Java ]
+	
     static constraints = {
     }
 }

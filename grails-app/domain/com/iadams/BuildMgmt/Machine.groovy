@@ -6,7 +6,9 @@ class Machine {
 	String os
 	String os_ver
 	String os_arch
-
+	
+	static hasMany = [ builds : Build ]
+	
     static constraints = {
     }
 }

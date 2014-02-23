@@ -5,10 +5,10 @@ class Java {
 	String ver
 	String vendor
 	String home
-	String jvm
-	String runtime
 	
 	static belongsTo = [ jvm : JavaVirtualMachine, runtime : JavaRuntime ]
+	
+	static hasMany = [ builds : Build ]
 
     static constraints = {
     }

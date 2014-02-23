@@ -21,17 +21,17 @@ class BuildIntegrationSpec extends IntegrationSpec {
 	def "Saving our first build to the database"() {
 		
 		given: "A brand new build"
-		def build1 = new Build(	name: "grdl-Build1",
+		def build1 = new Build(	task: "one",
 								outcome: "Success",
 								err_msg: "",
 								time: "1.12345",
 								project_dir: "C:\\workingDir",
 								ver: "1.0",
-								group: "com.iadams.BuildMgmt",
-								user: joe.id,
-								machine: laptop.id,
-								java: J.id,
-								project: exampleProj.id )
+								grp: "com.iadams.BuildMgmt",
+								user: joe,
+								machine: laptop,
+								java: J,
+								project: exampleProj )
 		
 		when: "we save the build"
 		build1.save()
@@ -48,6 +48,6 @@ class BuildIntegrationSpec extends IntegrationSpec {
 		laptop = new Machine(name: "Laptop", os: "Windows", os_ver: "6.1", os_arch: "x64").save(failOnError: true)
 		def runtime = new JavaRuntime(name: "Java(TM) SE Runtime Environment", ver: "1.6").save(failOnError: true)
 		def jvm = new JavaVirtualMachine(name: "JVM name", ver: "1.6", vendor: "Oracle").save(failOnError: true)
-		J = new Java(ver: "1.6", vendor: "Oracle", home: "C:\\JDK", jvm: jvm.id, runtime: runtime.id).save(failOnError: true)
+		J = new Java(ver: "1.6", vendor: "Oracle", home: "C:\\JDK", jvm: jvm, runtime: runtime).save(failOnError: true)
 	}
 }

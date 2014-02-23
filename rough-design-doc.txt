@@ -8,16 +8,16 @@ Machine:
 ---os_arch
 
 Java
----version
+---ver
 ---vendor
 ---home
 ---JVM
 	---name
-	---version
+	---ver
 	---vendor
 ---JavaRuntime
 	---name
-	---version
+	---ver
 
 Project
 ---name
@@ -30,8 +30,8 @@ Build
 ---err_msg
 ---time
 ---project_dir
----version
----group
+---ver
+---grp
 ***User
 ***Machine
 ***Java

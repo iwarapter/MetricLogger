@@ -15,7 +15,7 @@ class JavaIntegrationSpec extends IntegrationSpec {
 	def "Saving our first Java install to the database"() {
 		
 		given: "A brand new java install"
-		def J = new Java(ver: "1.6", vendor: "Oracle", home: "C:\\JDK", jvm: jvm.id, runtime: runtime.id)
+		def J = new Java(ver: "1.6", vendor: "Oracle", home: "C:\\JDK", jvm: jvm, runtime: runtime)
 		
 		when: "we save the java install"
 		J.save()

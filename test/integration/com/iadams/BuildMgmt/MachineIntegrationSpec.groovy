@@ -7,7 +7,7 @@ import grails.plugin.spock.*
 
 class MachineIntegrationSpec extends IntegrationSpec {
 
-	def "Saving our first user to the database"() {
+	def "Saving our first machine to the database"() {
 		
 		given: "A brand new machine"
 		def laptop = new Machine(name: "Laptop", os: "Windows", os_ver: "6.1", os_arch: "x64")

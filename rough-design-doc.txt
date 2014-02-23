@@ -1,0 +1,39 @@
+User:
+---name
+
+Machine:
+---name
+---os
+---os_ver
+---os_arch
+
+Java
+---name
+---version
+---vendor
+---home
+---JVM
+	---name
+	---version
+	---vendor
+---JavaRuntime
+	---name
+	---version
+
+Project
+---name
+---tasks
+---description
+
+Build
+---task
+---outcome
+---err_msg
+---time
+---project_dir
+---version
+---group
+***User
+***Machine
+***Java
+***Project

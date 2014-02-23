@@ -2,7 +2,6 @@ package com.iadams.BuildMgmt
 
 class Java {
 	
-	String name
 	String ver
 	String vendor
 	String home

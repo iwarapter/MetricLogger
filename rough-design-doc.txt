@@ -8,7 +8,6 @@ Machine:
 ---os_arch
 
 Java
----name
 ---version
 ---vendor
 ---home

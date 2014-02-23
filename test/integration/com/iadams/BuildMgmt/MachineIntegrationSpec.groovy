@@ -18,6 +18,6 @@ class MachineIntegrationSpec extends IntegrationSpec {
 		then: "we find the user in the db"
 		laptop.errors.errorCount == 0
 		laptop.id != null
-		User.get(laptop.id).name == laptop.name
+		Machine.get(laptop.id).name == laptop.name
 	}
 }

@@ -18,6 +18,6 @@ class UserIntegrationSpec extends IntegrationSpec {
 		then: "we find the user in the db"
 		joe.errors.errorCount == 0
 		joe.id != null
-		User.getAt(joe.id).name == joe.name
+		User.get(joe.id).name == joe.name
 	}
 }

@@ -56,7 +56,7 @@ class UserRestControllerSpec extends Specification {
 	
 	void "POST a single user as JSON"() {
 		when: "I request a new user"
-		request.json = '{"user": {"name": "Dave" }}'
+		request.json = '{"user": {"name": "Goose" }}'
 		controller.save()
 
 		then: "I get a 201 JSON response with the ID of the new user"
@@ -66,7 +66,7 @@ class UserRestControllerSpec extends Specification {
 	
 	void "POST a single user as XML"() {
 		when: "I request a new user"
-		request.xml = '<user><name>Joe</name></user>'
+		request.xml = '<user><name>Maverick</name></user>'
 		response.format = "xml"
 		controller.save()
 

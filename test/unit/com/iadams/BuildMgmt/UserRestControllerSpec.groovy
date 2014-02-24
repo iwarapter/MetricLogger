@@ -16,8 +16,8 @@ class UserRestControllerSpec extends Specification {
 
 	void "GET a list of users as JSON"() {
 		
-		when: "I invoke the show action without an ID"
-		controller.show()
+		when: "I invoke the list action"
+		controller.list()
 		
 		then: "I receive the expected users as a JSON list"
 		response.json*.name.sort() == ["Dave", "Joe"]
@@ -30,6 +30,28 @@ class UserRestControllerSpec extends Specification {
 		
 		then: "I get the user back"
 		response.json.name == "Dave"
+	}
+	
+	void "GET a list of users as XML"() {
+
+		when: "I invoke the list action"
+		response.format = "xml"
+		controller.list()
+
+		then: "I get the expected builds as a JSON list"
+		response.xml.user.name*.text().sort() == [
+			"Dave",
+			"Joe"]
+	}
+	
+	void "GET a single user as XML"() {
+
+		when: "I invoke the show action with a user name"
+		response.format = "xml"
+		controller.show("Dave")
+
+		then: "I get the expected builds as a JSON list"
+		response.xml.name.text() == "Dave"
 	}
 	
 	def setup() {

@@ -54,6 +54,28 @@ class UserRestControllerSpec extends Specification {
 		response.xml.name.text() == "Dave"
 	}
 	
+	void "POST a single user as JSON"() {
+		when: "I request a new user"
+		request.json = '{"user": {"name": "Dave" }}'
+		controller.save()
+
+		then: "I get a 201 JSON response with the ID of the new user"
+		response.status == 201
+		response.json.id instanceof Number
+	}
+	
+	void "POST a single user as XML"() {
+		when: "I request a new user"
+		request.xml = '<user><name>Joe</name></user>'
+		response.format = "xml"
+		controller.save()
+
+		then: "I get a 201 JSON response with the ID of the new user"
+		response.status == 201
+		response.xml.entry.@key.text() == "id"
+		response.xml.entry.text().isNumber()
+	}
+	
 	def setup() {
 		def joe = new User(name: "Joe").save(failOnError: true)
 		def dave = new User(name: "Dave").save(failOnError: true)

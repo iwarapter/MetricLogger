@@ -53,6 +53,28 @@ class MachineRestControllerSpec extends Specification {
 		response.xml.name.text() == "desktop"
 	}
 	
+	void "POST a single machine as JSON"() {
+		when: "I request a new machine"
+		request.json = '{"machine": {"name": "server1", "os": "Linux", "os_ver": "5.9", "os_arch": "x64"}}'
+		controller.save()
+
+		then: "I get a 201 JSON response with the ID of the new machine"
+		response.status == 201
+		response.json.id instanceof Number
+	}
+	
+	void "POST a single user as XML"() {
+		when: "I request a new user"
+		request.xml = '<user><name>server2</name><os>Linux</os><os_ver>5.9</os_ver><os_arch>x64</os_arch></user>'
+		response.format = "xml"
+		controller.save()
+
+		then: "I get a 201 JSON response with the ID of the new user"
+		response.status == 201
+		response.xml.entry.@key.text() == "id"
+		response.xml.entry.text().isNumber()
+	}
+	
 	def setup() {
 		def laptop = new Machine(name: "laptop", os: "Windows", os_ver: "6.1", os_arch: "x64").save(failOnError: true)
 		def desktop = new Machine(name: "desktop", os: "Linux", os_ver: "5.9", os_arch: "x86").save(failOnError: true)

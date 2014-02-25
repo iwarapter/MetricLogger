@@ -20,16 +20,16 @@ class ProjectRestControllerSpec extends Specification {
 		controller.list()
 		
 		then: "I receive the expected projects as a JSON list"
-		response.json*.name.sort() == ["Dave", "Joe"]
+		response.json*.name.sort() == ["example1", "example2"]
 	}
 	
 	void "GET a single user as JSON"() {
 		
 		when: "I invoke the show action with a project name"
-		controller.show("Dave")
+		controller.show("example1")
 		
 		then: "I get the project back"
-		response.json.name == "Dave"
+		response.json.name == "example1"
 	}
 	
 	def setup() {

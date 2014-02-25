@@ -31,6 +31,28 @@ class MachineRestControllerSpec extends Specification {
 		response.json.name == "desktop"
 	}
 	
+	void "GET a list of machines as XML"() {
+
+		when: "I invoke the list action"
+		response.format = "xml"
+		controller.list()
+
+		then: "I get the expected machines as a JSON list"
+		response.xml.machine.name*.text().sort() == [
+			"desktop",
+			"laptop"]
+	}
+	
+	void "GET a single machine as XML"() {
+
+		when: "I invoke the show action with a user name"
+		response.format = "xml"
+		controller.show("desktop")
+
+		then: "I get the expected builds as a JSON list"
+		response.xml.name.text() == "desktop"
+	}
+	
 	def setup() {
 		def laptop = new Machine(name: "laptop", os: "Windows", os_ver: "6.1", os_arch: "x64").save(failOnError: true)
 		def desktop = new Machine(name: "desktop", os: "Linux", os_ver: "5.9", os_arch: "x86").save(failOnError: true)

@@ -1,0 +1,39 @@
+package com.iadams.BuildMgmt
+
+import com.iadams.BuildMgmt.Project
+import com.iadams.BuildMgmt.ProjectRestController
+
+import grails.test.mixin.TestFor
+import grails.test.mixin.Mock
+import spock.lang.Specification
+
+/**
+ * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
+ */
+@TestFor(ProjectRestController)
+@Mock(Project)
+class ProjectRestControllerSpec extends Specification {
+
+	void "GET a list of projects as JSON"() {
+		
+		when: "I invoke the list action"
+		controller.list()
+		
+		then: "I receive the expected projects as a JSON list"
+		response.json*.name.sort() == ["Dave", "Joe"]
+	}
+	
+	void "GET a single user as JSON"() {
+		
+		when: "I invoke the show action with a project name"
+		controller.show("Dave")
+		
+		then: "I get the project back"
+		response.json.name == "Dave"
+	}
+	
+	def setup() {
+		def exampleProj1 = new Project(name: "example1", tasks: ["one", "two"], description: "The example project description").save(failOnError: true)
+		def exampleProj2 = new Project(name: "example2", tasks: ["three", "four"], description: "The example project description").save(failOnError: true)
+	}
+}

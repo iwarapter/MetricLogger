@@ -64,12 +64,12 @@ class MachineRestControllerSpec extends Specification {
 	}
 	
 	void "POST a single user as XML"() {
-		when: "I request a new user"
-		request.xml = '<user><name>server2</name><os>Linux</os><os_ver>5.9</os_ver><os_arch>x64</os_arch></user>'
+		when: "I request a new machine"
+		request.xml = '<machine><name>server2</name><os>Linux</os><os_ver>5.9</os_ver><os_arch>x64</os_arch></machine>'
 		response.format = "xml"
 		controller.save()
 
-		then: "I get a 201 JSON response with the ID of the new user"
+		then: "I get a 201 JSON response with the ID of the new machine"
 		response.status == 201
 		response.xml.entry.@key.text() == "id"
 		response.xml.entry.text().isNumber()

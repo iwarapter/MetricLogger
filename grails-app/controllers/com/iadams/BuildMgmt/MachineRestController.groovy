@@ -27,4 +27,22 @@ class MachineRestController {
 			xml { render body as XML }
 		}
 	}
+	
+	def save() {
+		def body
+		def machine = new Machine(params.machine)
+		if(machine.validate() && machine.save()) {
+			response.status = 201
+			body = [id: machine.id]
+		}
+		else {
+			response.status = 403
+			body = [error: "Invalid data"]
+		}
+
+		withFormat {
+			json { render body as JSON }
+			xml { render body as XML }
+		}
+	}
 }

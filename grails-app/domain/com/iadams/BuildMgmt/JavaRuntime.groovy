@@ -5,7 +5,7 @@ class JavaRuntime {
 	String name
 	String ver
 	
-	static hasMany = [ java : Java ]
+	static hasMany = [ java : JavaInstall ]
 	
     static constraints = {
     }

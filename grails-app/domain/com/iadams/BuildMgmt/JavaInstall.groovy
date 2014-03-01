@@ -1,6 +1,6 @@
 package com.iadams.BuildMgmt
 
-class Java {
+class JavaInstall {
 	
 	String ver
 	String vendor

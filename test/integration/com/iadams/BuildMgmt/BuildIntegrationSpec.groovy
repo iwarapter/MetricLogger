@@ -1,7 +1,7 @@
 package com.iadams.BuildMgmt
 
 import com.iadams.BuildMgmt.Build
-import com.iadams.BuildMgmt.Java
+import com.iadams.BuildMgmt.JavaInstall
 import com.iadams.BuildMgmt.JavaRuntime
 import com.iadams.BuildMgmt.JavaVirtualMachine
 import com.iadams.BuildMgmt.Project
@@ -48,6 +48,6 @@ class BuildIntegrationSpec extends IntegrationSpec {
 		laptop = new Machine(name: "Laptop", os: "Windows", os_ver: "6.1", os_arch: "x64").save(failOnError: true)
 		def runtime = new JavaRuntime(name: "Java(TM) SE Runtime Environment", ver: "1.6").save(failOnError: true)
 		def jvm = new JavaVirtualMachine(name: "JVM name", ver: "1.6", vendor: "Oracle").save(failOnError: true)
-		J = new Java(ver: "1.6", vendor: "Oracle", home: "C:\\JDK", jvm: jvm, runtime: runtime).save(failOnError: true)
+		J = new JavaInstall(ver: "1.6", vendor: "Oracle", home: "C:\\JDK", jvm: jvm, runtime: runtime).save(failOnError: true)
 	}
 }

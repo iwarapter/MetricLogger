@@ -1,5 +1,5 @@
 package com.iadams.BuildMgmt
 
-class JavaController {
+class JavaInstallController {
     static scaffold = true
 }

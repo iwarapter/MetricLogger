@@ -27,4 +27,22 @@ class ProjectRestController {
 			xml { render body as XML }
 		}
 	}
+	
+	def save() {
+		def body
+		def proj = new Project(params.project)
+		if(proj.validate() && proj.save()) {
+			response.status = 201
+			body = [id: proj.id]
+		}
+		else {
+			response.status = 403
+			body = [error: "Invalid data"]
+		}
+
+		withFormat {
+			json { render body as JSON }
+			xml { render body as XML }
+		}
+	}
 }

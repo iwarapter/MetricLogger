@@ -6,7 +6,12 @@ class JavaInstall {
 	String vendor
 	String home
 	
-	static belongsTo = [ jvm : JavaVirtualMachine, runtime : JavaRuntime ]
+	String runtimeName
+	String runtimeVer
+	
+	String jvmName
+	String jvmVer
+	String jvmVendor
 	
 	static hasMany = [ builds : Build ]
 

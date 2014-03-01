@@ -15,7 +15,7 @@ class Build {
 	String ver
 	String grp
 	
-	static belongsTo = [ java : JavaInstall, user : User, machine : Machine, project : Project ]
+	static belongsTo = [ javaInstall : JavaInstall, user : User, machine : Machine, project : Project ]
 	
     static constraints = {
     }

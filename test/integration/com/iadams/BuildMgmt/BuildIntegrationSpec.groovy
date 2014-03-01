@@ -2,8 +2,6 @@ package com.iadams.BuildMgmt
 
 import com.iadams.BuildMgmt.Build
 import com.iadams.BuildMgmt.JavaInstall
-import com.iadams.BuildMgmt.JavaRuntime
-import com.iadams.BuildMgmt.JavaVirtualMachine
 import com.iadams.BuildMgmt.Project
 import com.iadams.BuildMgmt.User
 import com.iadams.BuildMgmt.Machine
@@ -30,7 +28,7 @@ class BuildIntegrationSpec extends IntegrationSpec {
 								grp: "com.iadams.BuildMgmt",
 								user: joe,
 								machine: laptop,
-								java: J,
+								javaInstall: J,
 								project: exampleProj )
 		
 		when: "we save the build"
@@ -46,8 +44,13 @@ class BuildIntegrationSpec extends IntegrationSpec {
 		joe = new User(name: "Joe").save(failOnError: true)
 		exampleProj = new Project(name: "example", tasks: ["one", "two"], description: "The example project description").save(failOnError: true)
 		laptop = new Machine(name: "Laptop", os: "Windows", os_ver: "6.1", os_arch: "x64").save(failOnError: true)
-		def runtime = new JavaRuntime(name: "Java(TM) SE Runtime Environment", ver: "1.6").save(failOnError: true)
-		def jvm = new JavaVirtualMachine(name: "JVM name", ver: "1.6", vendor: "Oracle").save(failOnError: true)
-		J = new JavaInstall(ver: "1.6", vendor: "Oracle", home: "C:\\JDK", jvm: jvm, runtime: runtime).save(failOnError: true)
+		J = new JavaInstall(ver: "1.6", 
+							vendor: "Oracle", 
+							home: "C:\\JDK",
+							runtimeName: "Java(TM) SE Runtime Environment",
+							runtimeVer: "1.6",
+							jvmName: "JVM name",
+							jvmVer: "1.6",
+							jvmVendor: "Oracle").save(failOnError: true)
 	}
 }

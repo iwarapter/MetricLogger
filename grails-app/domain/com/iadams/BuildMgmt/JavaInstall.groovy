@@ -5,6 +5,7 @@ class JavaInstall {
 	String ver
 	String vendor
 	String home
+	int arch
 	
 	String runtimeName
 	String runtimeVer

@@ -47,6 +47,7 @@ class BuildIntegrationSpec extends IntegrationSpec {
 		J = new JavaInstall(ver: "1.6", 
 							vendor: "Oracle", 
 							home: "C:\\JDK",
+							arch: 32,
 							runtimeName: "Java(TM) SE Runtime Environment",
 							runtimeVer: "1.6",
 							jvmName: "JVM name",

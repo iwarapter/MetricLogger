@@ -54,6 +54,28 @@ class ProjectRestControllerSpec extends Specification {
 		response.xml.name.text() == "example1"
 	}
 	
+	void "POST a single project as JSON"() {
+		when: "I request a new project"
+		request.json = '{"project": {"name": "example3", "tasks": "one, two", "description": "The example project description"}}'
+		controller.save()
+
+		then: "I get a 201 JSON response with the ID of the new project"
+		response.status == 201
+		response.json.id instanceof Number
+	}
+	
+	void "POST a single project as XML"() {
+		when: "I request a new project"
+		request.xml = '<project><name>example4</name><tasks>one, two</tasks><description>The example project description</description></project>'
+		response.format = "xml"
+		controller.save()
+
+		then: "I get a 201 JSON response with the ID of the new project"
+		response.status == 201
+		response.xml.entry.@key.text() == "id"
+		response.xml.entry.text().isNumber()
+	}
+	
 	def setup() {
 		def exampleProj1 = new Project(name: "example1", tasks: ["one", "two"], description: "The example project description").save(failOnError: true)
 		def exampleProj2 = new Project(name: "example2", tasks: ["three", "four"], description: "The example project description").save(failOnError: true)

@@ -23,13 +23,35 @@ class ProjectRestControllerSpec extends Specification {
 		response.json*.name.sort() == ["example1", "example2"]
 	}
 	
-	void "GET a single user as JSON"() {
+	void "GET a single project as JSON"() {
 		
 		when: "I invoke the show action with a project name"
 		controller.show("example1")
 		
 		then: "I get the project back"
 		response.json.name == "example1"
+	}
+	
+	void "GET a list of projects as XML"() {
+		
+		when: "I invoke the list action"
+		response.format = "xml"
+		controller.list()
+
+		then: "I get the expected projects as a JSON list"
+		response.xml.project.name*.text().sort() == [
+			"example1",
+			"example2"]
+	}
+	
+	void "GET a single project as XML"() {
+
+		when: "I invoke the show action with a project name"
+		response.format = "xml"
+		controller.show("example1")
+
+		then: "I get the expected projects as a JSON list"
+		response.xml.name.text() == "example1"
 	}
 	
 	def setup() {

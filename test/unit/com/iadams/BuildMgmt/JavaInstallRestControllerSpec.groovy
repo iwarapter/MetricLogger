@@ -30,8 +30,7 @@ class JavaInstallRestControllerSpec extends Specification {
 			runtimeName: "Java(TM) SE Runtime Environment",
 			runtimeVer: "1.6",
 			jvmName: "JVM name",
-			jvmVer: "1.6",
-			jvmVendor: "Oracle").save(failOnError: true)
+			jvmVer: "1.6").save(failOnError: true)
 		
 		def J2 = new JavaInstall(ver: "1.7.0_07",
 			vendor: "Oracle Corporation",
@@ -39,7 +38,6 @@ class JavaInstallRestControllerSpec extends Specification {
 			runtimeName: "Java(TM) SE Runtime Environment",
 			runtimeVer: "1.7.0_07-b11",
 			jvmName: "Java HotSpot(TM) 64-Bit Server VM",
-			jvmVer: "23.3-b01",
-			jvmVendor: "Oracle Corporation").save(failOnError: true)
+			jvmVer: "23.3-b01").save(failOnError: true)
 	}
 }

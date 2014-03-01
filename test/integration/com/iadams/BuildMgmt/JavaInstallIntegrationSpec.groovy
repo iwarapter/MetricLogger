@@ -16,8 +16,7 @@ class JavaInstallIntegrationSpec extends IntegrationSpec {
 								runtimeName: "Java(TM) SE Runtime Environment",
 								runtimeVer: "1.6",
 								jvmName: "JVM name",
-								jvmVer: "1.6",
-								jvmVendor: "Oracle")
+								jvmVer: "1.6")
 		
 		when: "we save the java install"
 		J.save()

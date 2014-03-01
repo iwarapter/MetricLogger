@@ -11,7 +11,6 @@ class JavaInstall {
 	
 	String jvmName
 	String jvmVer
-	String jvmVendor
 	
 	static hasMany = [ builds : Build ]
 

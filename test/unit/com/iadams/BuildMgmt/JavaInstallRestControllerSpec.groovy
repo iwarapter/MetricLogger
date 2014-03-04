@@ -6,7 +6,6 @@ import com.iadams.BuildMgmt.JavaInstallRestController
 import grails.test.mixin.TestFor
 import grails.test.mixin.Mock
 import spock.lang.Specification
-
 /**
  * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
  */
@@ -21,6 +20,16 @@ class JavaInstallRestControllerSpec extends Specification {
 		
 		then: "I receive the expected JavaInstalls as a JSON list"
 		response.json*.ver.sort() == ["1.6", "1.7.0_07"]
+	}
+	
+	void "GET a list of JavaInstalls as XML"() {
+		
+		when: "I invoke the list action"
+		response.format = "xml"
+		controller.list()
+
+		then: "I get the expected JavaInstalls as a XML list"
+		response.xml.javaInstall.ver*.text().sort() == ["1.6","1.7.0_07"]
 	}
 	
 	def setup() {

@@ -21,6 +21,7 @@ class ProjectRestController {
 	def show(String name) {
 		def body
 		body = Project.findByName(name)
+		println body
 		
 		withFormat {
 			json { render body as JSON }

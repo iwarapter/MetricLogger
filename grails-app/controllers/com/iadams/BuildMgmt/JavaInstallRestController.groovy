@@ -17,10 +17,10 @@ class JavaInstallRestController {
 			xml { render body as XML }
 		}
 	}
-	//, String jvmVer, String runtimeVer
+
 	def show(String ver, int arch ) {
 		def body
-		body = JavaInstall.findAllByVerAndArch(ver,arch)
+		body = JavaInstall.findByVerAndArch(ver, arch)
 		
 		withFormat {
 			json { render body as JSON }

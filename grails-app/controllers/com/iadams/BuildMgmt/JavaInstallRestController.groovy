@@ -18,9 +18,9 @@ class JavaInstallRestController {
 		}
 	}
 
-	def show(String ver, int arch ) {
+	def show(String ver, int arch, String jvmVer ) {
 		def body
-		body = JavaInstall.findByVerAndArch(ver, arch)
+		body = JavaInstall.findByVerAndArchAndJvmVer(ver, arch, jvmVer)
 		
 		withFormat {
 			json { render body as JSON }

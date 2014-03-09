@@ -25,7 +25,7 @@ class JavaInstallRestControllerSpec extends Specification {
 	void "GET a single JavaInstall as JSON"() {
 		
 		when: "I invoke the show action with a JavaInstall name"
-		controller.show("1.7.0_07", 64)
+		controller.show("1.7.0_07", 64, "23.3-b01")
 		
 		then: "I get the JavaInstall back"
 		response.json.ver == "1.7.0_07"

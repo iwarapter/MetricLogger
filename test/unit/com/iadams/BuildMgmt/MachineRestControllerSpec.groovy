@@ -63,7 +63,7 @@ class MachineRestControllerSpec extends Specification {
 		response.json.id instanceof Number
 	}
 	
-	void "POST a single user as XML"() {
+	void "POST a single machine as XML"() {
 		when: "I request a new machine"
 		request.xml = '<machine><name>server2</name><os>Linux</os><os_ver>5.9</os_ver><os_arch>x64</os_arch></machine>'
 		response.format = "xml"

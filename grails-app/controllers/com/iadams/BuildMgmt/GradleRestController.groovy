@@ -42,7 +42,7 @@ class GradleRestController {
 		}
 		else {
 			response.status = 403
-			body = [error: "Invalid data"]
+			body = [error: 'Invalid data']
 		}
 
 		withFormat {

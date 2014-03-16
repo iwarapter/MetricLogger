@@ -64,6 +64,16 @@ class UserRestControllerSpec extends Specification {
 		response.json.id instanceof Number
 	}
 	
+	void "POST a single failing user as JSON"() {
+		when: "I request a new user"
+		request.json = '{"user": {"duck": "Goose" }}'
+		controller.save()
+
+		then: "I get a 403 JSON response"
+		response.status == 403
+		response.json.error == "Invalid data"
+	}
+	
 	void "POST a single user as XML"() {
 		when: "I request a new user"
 		request.xml = '<user><name>Maverick</name></user>'
@@ -74,6 +84,18 @@ class UserRestControllerSpec extends Specification {
 		response.status == 201
 		response.xml.entry.@key.text() == "id"
 		response.xml.entry.text().isNumber()
+	}
+	
+	void "POST a single failing user as XML"() {
+		when: "I request a new user"
+		request.xml = '<user><duck>Maverick</duck></user>'
+		response.format = "xml"
+		controller.save()
+
+		then: "I get a 403 JSON response"
+		response.status == 403
+		response.xml.entry.@key.text() == "error"
+		response.xml.entry.text() == "Invalid data"
 	}
 	
 	def setup() {

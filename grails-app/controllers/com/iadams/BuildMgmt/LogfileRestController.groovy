@@ -31,7 +31,9 @@ class LogfileRestController {
 	def save() {
 		def body
 		def log = new Logfile(params.log)
-		log.myFile =  new String(log.myFile.decodeBase64())
+		if(log.myFile != null){
+			log.myFile =  new String(log.myFile.decodeBase64())
+		}
 		if(log.validate() && log.save()) {
 			response.status = 201
 			body = [id: log.id]

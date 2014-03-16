@@ -71,6 +71,16 @@ class LogfileRestControllerSpec extends Specification {
 		response.json.id instanceof Number
 	}
 	
+	void "POST a single failing log as JSON"() {
+		when: "I request a new log"
+		request.json = '{"log": {"something" : "wrong", "new": "garbage"}}'
+		controller.save()
+
+		then: "I get a 403 JSON response"
+		response.status == 403
+		response.json.error == "Invalid data"
+	}
+	
 	void "POST a single log as XML"() {
 		when: "I request a new log"
 		request.xml = '<log><myFile>'+ encoded + '</myFile></log>'		
@@ -81,5 +91,17 @@ class LogfileRestControllerSpec extends Specification {
 		response.status == 201
 		response.xml.entry.@key.text() == "id"
         response.xml.entry.text().isNumber()
+	}
+	
+	void "POST a single failing log as XML"() {
+		when: "I request a new log"
+		request.xml = '<log><rubbish>Garbage</rubbish></log>'
+		response.format = "xml"
+		controller.save()
+
+		then: "I get a 403 XML response with the ID of the new logfile"
+		response.status == 403
+		response.xml.entry.@key.text() == "error"
+		response.xml.entry.text() == "Invalid data"
 	}
 }

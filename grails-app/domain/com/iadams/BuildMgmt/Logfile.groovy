@@ -5,6 +5,6 @@ class Logfile {
 	String myFile
 	
     static constraints = {
-		myFile maxSize: 1024 * 1024 * 5
+		myFile maxSize: 1024 * 1024 * 5, blank: false, nullable: false
     }
 }

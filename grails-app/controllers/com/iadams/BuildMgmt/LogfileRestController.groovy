@@ -7,11 +7,31 @@ import grails.converters.XML
 
 class LogfileRestController {
 
+	def list() {
+		
+		def body
+		body = Logfile.list()
+		
+		withFormat {
+			json { render body as JSON }
+			xml { render body as XML }
+		}
+	}
+	
+	def show(Long id) {
+		def body
+		body = Logfile.get(id)
+		
+		withFormat {
+			json { render body as JSON }
+			xml { render body as XML }
+		}
+	}
+	
 	def save() {
 		def body
 		def log = new Logfile(params.log)
 		log.myFile =  new String(log.myFile.decodeBase64())
-		println log
 		if(log.validate() && log.save()) {
 			response.status = 201
 			body = [id: log.id]

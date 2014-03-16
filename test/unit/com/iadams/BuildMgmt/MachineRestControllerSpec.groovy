@@ -63,6 +63,16 @@ class MachineRestControllerSpec extends Specification {
 		response.json.id instanceof Number
 	}
 	
+	void "POST a single failing machine as JSON"() {
+		when: "I request a new malformed machine"
+		request.json = '{"machine": {"name": "server1", "os": "Linux", "os_ver": "5.9"}}'
+		controller.save()
+
+		then: "I get a 403 JSON response"
+		response.status == 403
+		response.json.error == "Invalid data"
+	}
+	
 	void "POST a single machine as XML"() {
 		when: "I request a new machine"
 		request.xml = '<machine><name>server2</name><os>Linux</os><os_ver>5.9</os_ver><os_arch>x64</os_arch></machine>'
@@ -73,6 +83,18 @@ class MachineRestControllerSpec extends Specification {
 		response.status == 201
 		response.xml.entry.@key.text() == "id"
 		response.xml.entry.text().isNumber()
+	}
+	
+	void "POST a single failing machine as XML"() {
+		when: "I request a new malformed machine"
+		request.xml = '<machine><name>server2</name><os>Linux</os><os_ver>5.9</os_ver></machine>'
+		response.format = "xml"
+		controller.save()
+
+		then: "I get a 403 JSON response"
+		response.status == 403
+		response.xml.entry.@key.text() == "error"
+		response.xml.entry.text() == "Invalid data"
 	}
 	
 	def setup() {

@@ -1,40 +1,40 @@
 class UrlMappings {
 
 	static mappings = {
-		def args1 = [controller: "BuildRest", parseRequest: true]
+		def buildRestArgs = [controller: "BuildRest", parseRequest: true]
         def c = {
             action = [GET: "list", POST: "save", PUT: "unsupported", DELETE: "unsupported"]
         }
 
-        "/api/v${v}/Builds" args1, c
-        "/api/Builds" args1, c
+        "/api/v${v}/Builds" buildRestArgs, c
+        "/api/Builds" buildRestArgs, c
 
         "/api/Builds/$id" controller: "BuildRest", parseRequest: true, {
             action = [GET: "show", POST: "unsupported", PUT: "update", DELETE: "delete"]
         }
 		
-		def args2 = [controller: "UserRest", parseRequest: true]
+		def userRestArgs = [controller: "UserRest", parseRequest: true]
 		
-		"/api/v${v}/Users" args2, c
-		"/api/Users" args2, c
+		"/api/v${v}/Users" userRestArgs, c
+		"/api/Users" userRestArgs, c
 		
 		"/api/Users/$id" controller: "UserRest", parseRequest: true, {
 			action = [GET: "show", POST: "save", PUT: "update", DELETE: "delete"]
 		}
 		
-		def args3 = [controller: "MachineRest", parseRequest: true]
+		def machineRestArgs = [controller: "MachineRest", parseRequest: true]
 		
-		"/api/v${v}/Machines" args3, c
-		"/api/Machines" args3, c
+		"/api/v${v}/Machines" machineRestArgs, c
+		"/api/Machines" machineRestArgs, c
 		
 		"/api/Machines/$id" controller: "MachineRest", parseRequest: true, {
 			action = [GET: "show", POST: "save", PUT: "update", DELETE: "delete"]
 		}
 		
-		def args4 = [controller: "LogfileRest", parseRequest: true]
+		def logRestArgs = [controller: "LogfileRest", parseRequest: true]
 		
-		"/api/v${v}/Logfiles" args4, c
-		"/api/Logfiles" args4, c
+		"/api/v${v}/Logfiles" logRestArgs, c
+		"/api/Logfiles" logRestArgs, c
 		
 		"/api/Logfiles/$id" controller: "LogfileRest", parseRequest: true, {
 			action = [GET: "show", POST: "save", PUT: "update", DELETE: "delete"]

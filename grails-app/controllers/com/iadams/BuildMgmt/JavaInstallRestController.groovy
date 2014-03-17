@@ -27,4 +27,22 @@ class JavaInstallRestController {
 			xml { render body as XML }
 		}
 	}
+	
+	def save() {
+		def body
+		def jInstall = new JavaInstall(params.java)
+		if(jInstall.validate() && jInstall.save()) {
+			response.status = 201
+			body = [id: jInstall.id]
+		}
+		else {
+			response.status = 403
+			body = [error: "Invalid data"]
+		}
+
+		withFormat {
+			json { render body as JSON }
+			xml { render body as XML }
+		}
+	}
 }

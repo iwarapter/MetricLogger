@@ -31,12 +31,30 @@ class UrlMappings {
 			action = [GET: "show", POST: "save", PUT: "update", DELETE: "delete"]
 		}
 		
+		def projectRestArgs = [controller: "ProjectRest", parseRequest: true]
+		
+		"/api/v${v}/Projects" projectRestArgs, c
+		"/api/Projects" projectRestArgs, c
+		
+		"/api/Projects/$id" controller: "ProjectRest", parseRequest: true, {
+			action = [GET: "show", POST: "save", PUT: "update", DELETE: "delete"]
+		}
+		
 		def logRestArgs = [controller: "LogfileRest", parseRequest: true]
 		
 		"/api/v${v}/Logfiles" logRestArgs, c
 		"/api/Logfiles" logRestArgs, c
 		
 		"/api/Logfiles/$id" controller: "LogfileRest", parseRequest: true, {
+			action = [GET: "show", POST: "save", PUT: "update", DELETE: "delete"]
+		}
+		
+		def javaRestArgs = [controller: "JavaInstallRest", parseRequest: true]
+		
+		"/api/v${v}/JavaInstalls" javaRestArgs, c
+		"/api/JavaInstalls" javaRestArgs, c
+		
+		"/api/JavaInstalls/$id" controller: "JavaInstallRest", parseRequest: true, {
 			action = [GET: "show", POST: "save", PUT: "update", DELETE: "delete"]
 		}
 

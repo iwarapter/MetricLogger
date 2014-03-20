@@ -15,6 +15,7 @@ class BuildIntegrationSpec extends IntegrationSpec {
 	def exampleProj
 	def laptop
 	def J
+	def log1
 
 	def "Saving our first build to the database"() {
 		
@@ -29,7 +30,8 @@ class BuildIntegrationSpec extends IntegrationSpec {
 								user: joe,
 								machine: laptop,
 								javaInstall: J,
-								project: exampleProj )
+								project: exampleProj,
+								buildLog: log1 )
 		
 		when: "we save the build"
 		build1.save()
@@ -42,6 +44,7 @@ class BuildIntegrationSpec extends IntegrationSpec {
 	
 	def setup() {
 		joe = new User(name: "Joe").save(failOnError: true)
+		log1 = new Logfile(myFile: "Example log file contents 1").save(failOnError: true)
 		exampleProj = new Project(name: "example", tasks: ["one", "two"], description: "The example project description").save(failOnError: true)
 		laptop = new Machine(name: "Laptop", os: "Windows", os_ver: "6.1", os_arch: "x64").save(failOnError: true)
 		J = new JavaInstall(ver: "1.6", 

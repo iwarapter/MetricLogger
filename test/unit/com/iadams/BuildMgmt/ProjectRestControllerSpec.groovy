@@ -56,17 +56,18 @@ class ProjectRestControllerSpec extends Specification {
 	
 	void "POST a single project as JSON"() {
 		when: "I request a new project"
-		request.json = '{"project": {"name": "example3", "tasks": ["one", "two"] , "description": "The example project description"}}'
+		request.json = '{"project": {"name": "example3", "description": "The example project description"}}'
 		controller.save()
 
 		then: 'I get a 201 JSON response with the ID of the new project'
 		response.status == 201
 		response.json.id instanceof Number
+		println response.json
 	}
 	
 	void "POST a single failing project as JSON"() {
 		when: "I request a new project"
-		request.json = '{"project": {"name": "example3", "tasks": ["one", "two"]}}'
+		request.json = '{"project": {"name": "example3"}}'
 		controller.save()
 
 		then: 'I get a 403 JSON response with the error message'
@@ -76,7 +77,7 @@ class ProjectRestControllerSpec extends Specification {
 	 
 	void "POST a single project as XML"() {
 		when: 'I request a new project'
-		request.xml = '<project><name>example4</name><tasks>["one", "two"]</tasks><description>The example project description</description></project>'
+		request.xml = '<project><name>example4</name><description>The example project description</description></project>'
 		response.format = 'xml'
 		controller.save()
 
@@ -88,7 +89,7 @@ class ProjectRestControllerSpec extends Specification {
 	
 	void "POST a single failing project as XML"() {
 		when: 'I request a new project'
-		request.xml = '<project><name>example4</name><tasks>["one", "two"]</tasks></project>'
+		request.xml = '<project><name>example4</name></project>'
 		response.format = 'xml'
 		controller.save()
 

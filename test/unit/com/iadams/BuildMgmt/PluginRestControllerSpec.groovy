@@ -20,7 +20,7 @@ class PluginRestControllerSpec extends Specification {
 		controller.list()
 		
 		then: "I receive the expected plugins as a JSON list"
-		response.json*.id.sort() == [plugin1.id, plugin2.id]
+		response.json*.id.sort() == [plugin1.id, plugin2.id].sort()
 	}
 	
 	void "GET a single plugin as JSON"() {
@@ -41,7 +41,7 @@ class PluginRestControllerSpec extends Specification {
 		then: "I get the expected plugins as a JSON list"
 		response.xml.plugin.name*.text().sort() == [
 			plugin1.name,
-			plugin2.name]
+			plugin2.name].sort()
 	}
 	
 	void "GET a single plugin as XML"() {
@@ -56,7 +56,7 @@ class PluginRestControllerSpec extends Specification {
 	
 	void "POST a single plugin as JSON"() {
 		when: "I request a new plugin"
-		request.json = '{"plugin": {"name": "Java", "description": "The example plugin description"}}'
+		request.json = '{"plugin": {"name": "Java"}}'
 		controller.save()
 
 		then: 'I get a 201 JSON response with the ID of the new plugin'
@@ -66,7 +66,7 @@ class PluginRestControllerSpec extends Specification {
 	
 	void "POST a single failing plugin as JSON"() {
 		when: "I request a new plugin"
-		request.json = '{"plugin": {"name": "Java", "description": "The example plugin description"}}'
+		request.json = '{"plugin": {"cheese": "Java"}}'
 		controller.save()
 
 		then: 'I get a 403 JSON response with the error message'
@@ -88,7 +88,7 @@ class PluginRestControllerSpec extends Specification {
 	
 	void "POST a single failing plugin as XML"() {
 		when: 'I request a new plugin'
-		request.xml = '<plugin><name>Java</name><description>The example plugin description</description></plugin>'
+		request.xml = '<plugin><cheese>Java</cheese></plugin>'
 		response.format = 'xml'
 		controller.save()
 
@@ -98,13 +98,8 @@ class PluginRestControllerSpec extends Specification {
 		response.xml.entry.text() == 'Invalid data'
 	}
 	
-	def setup() {
-		def task1 = new Task(name: "clean").save(failOnError: true)
-		def task2 = new Task(name: "build").save(failOnError: true)
-		
-		def plugin1 = new Plugin(name: "Java").save(failOnError: true)
-		
-		plugin1 = new Plugin(name: "example1", tasks: [task1], plugin: [plugin1], description: "The example plugin description").save(failOnError: true)
-		plugin2 = new Plugin(name: "example2", tasks: [task1, task2],plugin: [plugin1],  description: "The example plugin description").save(failOnError: true)
+	def setup() {		
+		plugin1 = new Plugin(name: "Java").save(failOnError: true)
+		plugin2 = new Plugin(name: "Groovy").save(failOnError: true)
 	}
 }

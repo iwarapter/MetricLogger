@@ -57,6 +57,15 @@ class UrlMappings {
 		"/api/JavaInstalls/$id" controller: "JavaInstallRest", parseRequest: true, {
 			action = [GET: "show", POST: "save", PUT: "update", DELETE: "delete"]
 		}
+		
+		def pluginRestArgs = [controller: "PluginRest", parseRequest: true]
+		
+		"/api/v${v}/Plugins" javaRestArgs, c
+		"/api/Plugins" javaRestArgs, c
+		
+		"/api/Plugins/$id" controller: "PluginRest", parseRequest: true, {
+			action = [GET: "show", POST: "save", PUT: "update", DELETE: "delete"]
+		}
 
 		"/$controller/$action?/$id?"{
 			constraints {

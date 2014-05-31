@@ -66,5 +66,6 @@ grails.project.dependency.resolution = {
         runtime ":database-migration:1.3.2"
 
         compile ':cache:1.0.1'
+		compile ":class-domain-uml:0.1.5"
     }
 }

@@ -8,7 +8,6 @@ import com.iadams.BuildMgmt.Logfile
 
 class Build {
 	
-	String task
 	String outcome
 	String err_msg
 	String time
@@ -17,6 +16,7 @@ class Build {
 	String grp
 	
 	static belongsTo = [ javaInstall : JavaInstall, user : User, machine : Machine, project : Project, buildLog : Logfile ]
+	static hasMany = [ tasks : Task ]
 	
     static constraints = {
     }

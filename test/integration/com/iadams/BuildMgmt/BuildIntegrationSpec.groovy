@@ -1,11 +1,5 @@
 package com.iadams.BuildMgmt
 
-import com.iadams.BuildMgmt.Build
-import com.iadams.BuildMgmt.JavaInstall
-import com.iadams.BuildMgmt.Project
-import com.iadams.BuildMgmt.User
-import com.iadams.BuildMgmt.Machine
-
 import spock.lang.*
 import grails.plugin.spock.*
 
@@ -16,12 +10,13 @@ class BuildIntegrationSpec extends IntegrationSpec {
 	def laptop
 	def J
 	def log1
+	def task1
+	def plugin1
 
 	def "Saving our first build to the database"() {
 		
 		given: "A brand new build"
-		def build1 = new Build(	task: "one",
-								outcome: "Success",
+		def build1 = new Build(	outcome: "Success",
 								err_msg: "",
 								time: "1.12345",
 								project_dir: "C:\\workingDir",
@@ -31,7 +26,8 @@ class BuildIntegrationSpec extends IntegrationSpec {
 								machine: laptop,
 								javaInstall: J,
 								project: exampleProj,
-								buildLog: log1 )
+								buildLog: log1,
+								tasks: [task1] )
 		
 		when: "we save the build"
 		build1.save()
@@ -45,7 +41,9 @@ class BuildIntegrationSpec extends IntegrationSpec {
 	def setup() {
 		joe = new User(name: "Joe").save(failOnError: true)
 		log1 = new Logfile(myFile: "Example log file contents 1").save(failOnError: true)
-		exampleProj = new Project(name: "example", tasks: ["one", "two"], description: "The example project description").save(failOnError: true)
+		task1 = new Task(name: "clean").save(failOnError: true)
+		plugin1 = new Plugin(name: "Java").save(failOnError: true)
+		exampleProj = new Project(name: "example", tasks: [task1], plugins: [plugin1], description: "The example project description").save(failOnError: true)
 		laptop = new Machine(name: "Laptop", os: "Windows", os_ver: "6.1", os_arch: "x64").save(failOnError: true)
 		J = new JavaInstall(ver: "1.6", 
 							vendor: "Oracle", 

@@ -1,8 +1,5 @@
 package com.iadams.BuildMgmt
 
-import com.iadams.BuildMgmt.Project
-import com.iadams.BuildMgmt.ProjectRestController
-
 import grails.test.mixin.TestFor
 import grails.test.mixin.Mock
 import spock.lang.Specification
@@ -11,8 +8,11 @@ import spock.lang.Specification
  * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
  */
 @TestFor(ProjectRestController)
-@Mock(Project)
+@Mock([Project, Task, Plugin])
 class ProjectRestControllerSpec extends Specification {
+	
+	def exampleProj1
+	def exampleProj2
 
 	void "GET a list of projects as JSON"() {
 		
@@ -20,16 +20,16 @@ class ProjectRestControllerSpec extends Specification {
 		controller.list()
 		
 		then: "I receive the expected projects as a JSON list"
-		response.json*.name.sort() == ["example1", "example2"]
+		response.json*.id.sort() == [exampleProj1.id, exampleProj2.id]
 	}
 	
 	void "GET a single project as JSON"() {
 		
 		when: "I invoke the show action with a project name"
-		controller.show("example1")
+		controller.show(exampleProj1.name)
 		
 		then: "I get the project back"
-		response.json.name == "example1"
+		response.json.id == exampleProj1.id
 	}
 	
 	void "GET a list of projects as XML"() {
@@ -40,18 +40,18 @@ class ProjectRestControllerSpec extends Specification {
 
 		then: "I get the expected projects as a JSON list"
 		response.xml.project.name*.text().sort() == [
-			"example1",
-			"example2"]
+			exampleProj1.name,
+			exampleProj2.name]
 	}
 	
 	void "GET a single project as XML"() {
 
 		when: "I invoke the show action with a project name"
 		response.format = "xml"
-		controller.show("example1")
+		controller.show(exampleProj2.name)
 
 		then: "I get the expected projects as a JSON list"
-		response.xml.name.text() == "example1"
+		response.xml.name.text() == exampleProj2.name
 	}
 	
 	void "POST a single project as JSON"() {
@@ -62,7 +62,6 @@ class ProjectRestControllerSpec extends Specification {
 		then: 'I get a 201 JSON response with the ID of the new project'
 		response.status == 201
 		response.json.id instanceof Number
-		println response.json
 	}
 	
 	void "POST a single failing project as JSON"() {
@@ -100,7 +99,12 @@ class ProjectRestControllerSpec extends Specification {
 	}
 	
 	def setup() {
-		def exampleProj1 = new Project(name: "example1", tasks: ["one", "two"], description: "The example project description").save(failOnError: true)
-		def exampleProj2 = new Project(name: "example2", tasks: ["three", "four"], description: "The example project description").save(failOnError: true)
+		def task1 = new Task(name: "clean").save(failOnError: true)
+		def task2 = new Task(name: "build").save(failOnError: true)
+		
+		def plugin1 = new Plugin(name: "Java").save(failOnError: true)
+		
+		exampleProj1 = new Project(name: "example1", tasks: [task1], plugin: [plugin1], description: "The example project description").save(failOnError: true)
+		exampleProj2 = new Project(name: "example2", tasks: [task1, task2],plugin: [plugin1],  description: "The example project description").save(failOnError: true)
 	}
 }

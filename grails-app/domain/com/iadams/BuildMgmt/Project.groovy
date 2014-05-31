@@ -5,7 +5,7 @@ class Project {
 	String name
 	String description
 	
-	static hasMany = [ builds : Build ]
+	static hasMany = [ builds : Build,  tasks : Task, plugins : Plugin ]
 	
     static constraints = {
     }

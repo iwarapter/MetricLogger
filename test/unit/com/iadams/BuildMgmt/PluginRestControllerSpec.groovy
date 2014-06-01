@@ -26,7 +26,8 @@ class PluginRestControllerSpec extends Specification {
 	void "GET a single plugin as JSON"() {
 		
 		when: "I invoke the show action with a plugin name"
-		controller.show(plugin1.name)
+		params.name = plugin1.name
+		controller.show()
 		
 		then: "I get the plugin back"
 		response.json.id == plugin1.id
@@ -48,7 +49,8 @@ class PluginRestControllerSpec extends Specification {
 
 		when: "I invoke the show action with a plugin name"
 		response.format = "xml"
-		controller.show(plugin2.name)
+		params.name = plugin2.name
+		controller.show()
 
 		then: "I get the expected plugins as a JSON list"
 		response.xml.name.text() == plugin2.name
@@ -56,7 +58,7 @@ class PluginRestControllerSpec extends Specification {
 	
 	void "POST a single plugin as JSON"() {
 		when: "I request a new plugin"
-		request.json = '{"plugin": {"name": "Java"}}'
+		request.json = '{"plugin": {"name": "War"}}'
 		controller.save()
 
 		then: 'I get a 201 JSON response with the ID of the new plugin'
@@ -76,7 +78,7 @@ class PluginRestControllerSpec extends Specification {
 	 
 	void "POST a single plugin as XML"() {
 		when: 'I request a new plugin'
-		request.xml = '<plugin><name>Java</name></plugin>'
+		request.xml = '<plugin><name>Eclipse</name></plugin>'
 		response.format = 'xml'
 		controller.save()
 

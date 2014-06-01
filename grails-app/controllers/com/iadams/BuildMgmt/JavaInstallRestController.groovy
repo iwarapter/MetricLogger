@@ -18,9 +18,14 @@ class JavaInstallRestController {
 		}
 	}
 
-	def show(String ver, int arch, String jvmVer ) {
+	def show() {
 		def body
-		body = JavaInstall.findByVerAndArchAndJvmVer(ver, arch, jvmVer)
+		body = JavaInstall.findByVerAndArchAndJvmVer(params.jVer, params.jArch, params.jVMver)
+		
+		if(!body){
+			response.status = 200
+			body = [error: "Invalid data"]
+		}
 		
 		withFormat {
 			json { render body as JSON }

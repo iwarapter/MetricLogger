@@ -16,9 +16,14 @@ class PluginRestController {
 		}
 	}
 	
-	def show(String name) {
+	def show() {
 		def body
-		body = Plugin.findByName(name)
+		body = Plugin.findByName(params.name)
+		
+		if(!body){
+			response.status = 200
+			body = [error: "Invalid data"]
+		}
 		
 		withFormat {
 			json { render body as JSON }

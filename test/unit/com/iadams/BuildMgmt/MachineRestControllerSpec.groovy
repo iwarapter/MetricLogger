@@ -12,6 +12,9 @@ import spock.lang.Specification
 @TestFor(MachineRestController)
 @Mock(Machine)
 class MachineRestControllerSpec extends Specification {
+	
+	def laptop
+	def desktop
 
 	void "GET a list of machines as JSON"() {
 		
@@ -19,16 +22,17 @@ class MachineRestControllerSpec extends Specification {
 		controller.list()
 		
 		then: "I receive the expected machines as a JSON list"
-		response.json*.name.sort() == ["desktop", "laptop"]
+		response.json*.name.sort() == [	desktop.name, laptop.name].sort()
 	}
 	
 	void "GET a single machine as JSON"() {
 		
 		when: "I invoke the show action with a machine name"
-		controller.show("desktop")
+		params.name = desktop.name
+		controller.show()
 		
 		then: "I get the machine back"
-		response.json.name == "desktop"
+		response.json.name == desktop.name
 	}
 	
 	void "GET a list of machines as XML"() {
@@ -38,19 +42,18 @@ class MachineRestControllerSpec extends Specification {
 		controller.list()
 
 		then: "I get the expected machines as a JSON list"
-		response.xml.machine.name*.text().sort() == [
-			"desktop",
-			"laptop"]
+		response.xml.machine.name*.text().sort() == [ desktop.name, laptop.name].sort()
 	}
 	
 	void "GET a single machine as XML"() {
 
 		when: "I invoke the show action with a user name"
 		response.format = "xml"
-		controller.show("desktop")
+		params.name = desktop.name
+		controller.show()
 
 		then: "I get the expected builds as a JSON list"
-		response.xml.name.text() == "desktop"
+		response.xml.name.text() == desktop.name
 	}
 	
 	void "POST a single machine as JSON"() {
@@ -98,7 +101,7 @@ class MachineRestControllerSpec extends Specification {
 	}
 	
 	def setup() {
-		def laptop = new Machine(name: "laptop", os: "Windows", os_ver: "6.1", os_arch: "x64").save(failOnError: true)
-		def desktop = new Machine(name: "desktop", os: "Linux", os_ver: "5.9", os_arch: "x86").save(failOnError: true)
+		laptop = new Machine(name: "laptop", os: "Windows", os_ver: "6.1", os_arch: "x64").save(failOnError: true)
+		desktop = new Machine(name: "desktop", os: "Linux", os_ver: "5.9", os_arch: "x86").save(failOnError: true)
 	}
 }

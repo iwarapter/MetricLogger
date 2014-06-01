@@ -11,6 +11,10 @@ import spock.lang.Specification
 @Mock([Project, Task, Plugin])
 class ProjectRestControllerSpec extends Specification {
 	
+	def task1
+	def task2
+	def plugin1
+	def plugin2
 	def exampleProj1
 	def exampleProj2
 
@@ -26,7 +30,8 @@ class ProjectRestControllerSpec extends Specification {
 	void "GET a single project as JSON"() {
 		
 		when: "I invoke the show action with a project name"
-		controller.show(exampleProj1.name)
+		params.name = exampleProj1.name
+		controller.show()
 		
 		then: "I get the project back"
 		response.json.id == exampleProj1.id
@@ -48,7 +53,8 @@ class ProjectRestControllerSpec extends Specification {
 
 		when: "I invoke the show action with a project name"
 		response.format = "xml"
-		controller.show(exampleProj2.name)
+		params.name = exampleProj2.name
+		controller.show()
 
 		then: "I get the expected projects as a JSON list"
 		response.xml.name.text() == exampleProj2.name
@@ -99,12 +105,12 @@ class ProjectRestControllerSpec extends Specification {
 	}
 	
 	def setup() {
-		def task1 = new Task(name: "clean").save(failOnError: true)
-		def task2 = new Task(name: "build").save(failOnError: true)
+		task1 = new Task(name: "clean").save(failOnError: true)
+		task2 = new Task(name: "build").save(failOnError: true)
 		
-		def plugin1 = new Plugin(name: "Java").save(failOnError: true)
+		plugin1 = new Plugin(name: "Java").save(failOnError: true)
 		
-		exampleProj1 = new Project(name: "example1", tasks: [task1], plugin: [plugin1], description: "The example project description").save(failOnError: true)
-		exampleProj2 = new Project(name: "example2", tasks: [task1, task2],plugin: [plugin1],  description: "The example project description").save(failOnError: true)
+		exampleProj1 = new Project(name: "example1", tasks: [task1], plugins: [plugin1], description: "The example project description").save(failOnError: true)
+		exampleProj2 = new Project(name: "example2", tasks: [task1, task2],plugins: [plugin1],  description: "The example project description").save(failOnError: true)
 	}
 }

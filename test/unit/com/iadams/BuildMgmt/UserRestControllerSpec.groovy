@@ -13,6 +13,9 @@ import spock.lang.Specification
 @TestFor(UserRestController)
 @Mock(User)
 class UserRestControllerSpec extends Specification {
+	
+	def joe
+	def dave
 
 	void "GET a list of users as JSON"() {
 		
@@ -26,10 +29,11 @@ class UserRestControllerSpec extends Specification {
 	void "GET a single user as JSON"() {
 		
 		when: "I invoke the show action with a user name"
-		controller.show("Dave")
+		params.name = dave.name
+		controller.show()
 		
 		then: "I get the user back"
-		response.json.name == "Dave"
+		response.json.name == dave.name
 	}
 	
 	void "GET a list of users as XML"() {
@@ -48,10 +52,11 @@ class UserRestControllerSpec extends Specification {
 
 		when: "I invoke the show action with a user name"
 		response.format = "xml"
-		controller.show("Dave")
+		params.name = dave.name
+		controller.show()
 
 		then: "I get the expected builds as a JSON list"
-		response.xml.name.text() == "Dave"
+		response.xml.name.text() == dave.name
 	}
 	
 	void "POST a single user as JSON"() {
@@ -99,7 +104,7 @@ class UserRestControllerSpec extends Specification {
 	}
 	
 	def setup() {
-		def joe = new User(name: "Joe").save(failOnError: true)
-		def dave = new User(name: "Dave").save(failOnError: true)
+		joe = new User(name: "Joe").save(failOnError: true)
+		dave = new User(name: "Dave").save(failOnError: true)
 	}
 }

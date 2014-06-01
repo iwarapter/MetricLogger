@@ -18,9 +18,14 @@ class ProjectRestController {
 		}
 	}
 	
-	def show(String name) {
+	def show() {
 		def body
-		body = Project.findByName(name)
+		body = Project.findByName(params.name)
+		
+		if(!body){
+			response.status = 200
+			body = [error: "Invalid data"]
+		}
 		
 		withFormat {
 			json { render body as JSON }

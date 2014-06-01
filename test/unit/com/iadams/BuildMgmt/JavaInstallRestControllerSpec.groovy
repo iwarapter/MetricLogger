@@ -12,6 +12,8 @@ import spock.lang.Specification
 @TestFor(JavaInstallRestController)
 @Mock(JavaInstall)
 class JavaInstallRestControllerSpec extends Specification {
+	
+	def J1, J2
 
 	void "GET a list of JavaInstalls as JSON"() {
 		
@@ -25,10 +27,13 @@ class JavaInstallRestControllerSpec extends Specification {
 	void "GET a single JavaInstall as JSON"() {
 		
 		when: "I invoke the show action with a JavaInstall name"
-		controller.show("1.7.0_07", 64, "23.3-b01")
+		params.jVer = J1.ver
+		params.jArch = J1.arch
+		params.jVMver = J1.jvmVer
+		controller.show()
 		
 		then: "I get the JavaInstall back"
-		response.json.ver == "1.7.0_07"
+		response.json.ver == J1.ver
 	}
 	
 	void "GET a list of JavaInstalls as XML"() {
@@ -45,10 +50,13 @@ class JavaInstallRestControllerSpec extends Specification {
 		
 		when: "I invoke the show action with a user name"
 		response.format = "xml"
-		controller.show("1.7.0_07", 64, "23.3-b01")
+		params.jVer = J1.ver
+		params.jArch = J1.arch
+		params.jVMver = J1.jvmVer
+		controller.show()
 
 		then: "I get the expected builds as a JSON list"
-		response.xml.ver.text() == "1.7.0_07"
+		response.xml.ver.text() == J1.ver
 	}
 	
 	void "POST a single JavaInstall as JSON"() {
@@ -96,7 +104,7 @@ class JavaInstallRestControllerSpec extends Specification {
 	}
 	
 	def setup() {
-		def J1 = new JavaInstall(ver: "1.6",
+		J1 = new JavaInstall(ver: "1.6",
 			vendor: "Oracle",
 			home: "C:\\JDK1.6",
 			arch: 32,
@@ -105,7 +113,7 @@ class JavaInstallRestControllerSpec extends Specification {
 			jvmName: "JVM name",
 			jvmVer: "1.6").save(failOnError: true)
 		
-		def J2 = new JavaInstall(ver: "1.7.0_07",
+		J2 = new JavaInstall(ver: "1.7.0_07",
 			vendor: "Oracle Corporation",
 			home: "C:\\Program Files\\Java\\jdk1.7.0_07\\jre",
 			arch: 64,

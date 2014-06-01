@@ -1,7 +1,5 @@
 package com.iadams.BuildMgmt
 
-import com.iadams.BuildMgmt.User
-
 import grails.converters.JSON
 import grails.converters.XML
 
@@ -18,9 +16,14 @@ class UserRestController {
 		}
 	}
 	
-	def show(String name) {
+	def show() {
 		def body
-		body = User.findByName(name)
+		body = User.findByName(params.name)
+		
+		if(!body){
+			response.status = 200
+			body = [error: "Invalid data"]
+		}
 		
 		withFormat {
 			json { render body as JSON }

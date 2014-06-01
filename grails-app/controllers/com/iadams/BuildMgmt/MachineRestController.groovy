@@ -18,9 +18,14 @@ class MachineRestController {
 		}
 	}
 	
-	def show(String name) {
+	def show() {
 		def body
-		body = Machine.findByName(name)
+		body = Machine.findByName(params.name)
+		
+		if(!body){
+			response.status = 200
+			body = [error: "Invalid data"]
+		}
 		
 		withFormat {
 			json { render body as JSON }

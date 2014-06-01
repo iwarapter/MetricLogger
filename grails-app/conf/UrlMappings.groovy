@@ -3,7 +3,7 @@ class UrlMappings {
 	static mappings = {
 		def buildRestArgs = [controller: "BuildRest", parseRequest: true]
         def c = {
-            action = [GET: "list", POST: "save", PUT: "unsupported", DELETE: "unsupported"]
+            action = [GET: "show", POST: "save", PUT: "unsupported", DELETE: "unsupported"]
         }
 
         "/api/v${v}/Builds" buildRestArgs, c
@@ -60,10 +60,19 @@ class UrlMappings {
 		
 		def pluginRestArgs = [controller: "PluginRest", parseRequest: true]
 		
-		"/api/v${v}/Plugins" javaRestArgs, c
-		"/api/Plugins" javaRestArgs, c
+		"/api/v${v}/Plugins" pluginRestArgs, c
+		"/api/Plugins" pluginRestArgs, c
 		
 		"/api/Plugins/$id" controller: "PluginRest", parseRequest: true, {
+			action = [GET: "show", POST: "save", PUT: "update", DELETE: "delete"]
+		}
+		
+		def taskRestArgs = [controller: "TaskRest", parseRequest: true]
+		
+		"/api/v${v}/Tasks" taskRestArgs, c
+		"/api/Tasks" taskRestArgs, c
+		
+		"/api/Tasks/$id" controller: "TaskRest", parseRequest: true, {
 			action = [GET: "show", POST: "save", PUT: "update", DELETE: "delete"]
 		}
 

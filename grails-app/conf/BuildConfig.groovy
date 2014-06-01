@@ -20,6 +20,9 @@ grails.project.dependency.resolution = {
     log "error" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
     checksums true // Whether to verify checksums on resolve
     legacyResolve false // whether to do a secondary resolve on plugin installation, not advised and here for backwards compatibility
+	
+	def gebVersion = "0.9.2"
+	def seleniumVersion = "2.41.0"
 
     repositories {
         inherits true // Whether to inherit repository definitions from plugins
@@ -43,6 +46,11 @@ grails.project.dependency.resolution = {
 
         // runtime 'mysql:mysql-connector-java:5.1.22'
 		test "org.spockframework:spock-grails-support:0.7-groovy-2.0"
+		test 'org.codehaus.groovy.modules.http-builder:http-builder:0.5.2'
+		
+		test "org.gebish:geb-spock:$gebVersion"
+		test "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
+		test "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
     }
 
     plugins {
@@ -60,6 +68,8 @@ grails.project.dependency.resolution = {
 		test(":spock:0.7"){
 			exclude "spock-grails-support"
 		}
+		
+		test ":geb:$gebVersion"
 		
 		test ":code-coverage:1.2.7"
 

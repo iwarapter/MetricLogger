@@ -23,8 +23,8 @@ class ProjectRestController {
 		body = Project.findByName(params.name)
 		
 		if(!body){
-			response.status = 200
-			body = [error: "Invalid data"]
+			response.status = 404
+			body = [error: "No project called: ${params.name}"]
 		}
 		
 		withFormat {

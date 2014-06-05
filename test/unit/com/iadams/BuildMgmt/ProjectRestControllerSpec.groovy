@@ -37,6 +37,17 @@ class ProjectRestControllerSpec extends Specification {
 		response.json.id == exampleProj1.id
 	}
 	
+	void "GET a single project as JSON that does not exist"() {
+		
+		when: "I invoke the show action with a project name"
+		params.name = "lies"
+		controller.show()
+		
+		then: "I get the appropriate error"
+		response.status == 404
+		response.json.error == "No project called: ${params.name}"
+	}
+	
 	void "GET a list of projects as XML"() {
 		
 		when: "I invoke the list action"
@@ -58,6 +69,19 @@ class ProjectRestControllerSpec extends Specification {
 
 		then: "I get the expected projects as a JSON list"
 		response.xml.name.text() == exampleProj2.name
+	}
+	
+	void "GET a single project as XML that does not exist"() {
+		
+		when: "I invoke the show action with a project name"
+		response.format = "xml"
+		params.name = "lies"
+		controller.show()
+
+		then: "I get the appropriate error"
+		response.status == 404
+		response.xml.entry.@key.text() == 'error'
+		response.xml.entry.text() == "No project called: ${params.name}"
 	}
 	
 	void "POST a single project as JSON"() {

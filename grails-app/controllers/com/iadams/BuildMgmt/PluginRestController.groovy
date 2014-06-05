@@ -21,7 +21,7 @@ class PluginRestController {
 		body = Plugin.findByName(params.name)
 		
 		if(!body){
-			response.status = 200
+			response.status = 404
 			body = [error: "Invalid data"]
 		}
 		

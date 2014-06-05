@@ -8,7 +8,7 @@ import spock.lang.Specification
  * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
  */
 @TestFor(PluginRestController)
-@Mock([Plugin])
+@Mock([Plugin, Project])
 class PluginRestControllerSpec extends Specification {
 
 	def plugin1
@@ -58,7 +58,7 @@ class PluginRestControllerSpec extends Specification {
 	
 	void "POST a single plugin as JSON"() {
 		when: "I request a new plugin"
-		request.json = '{"plugin": {"name": "War"}}'
+		request.json = '{"plugin": {"name": "War", "project": "1" }}'
 		controller.save()
 
 		then: 'I get a 201 JSON response with the ID of the new plugin'
@@ -78,7 +78,7 @@ class PluginRestControllerSpec extends Specification {
 	 
 	void "POST a single plugin as XML"() {
 		when: 'I request a new plugin'
-		request.xml = '<plugin><name>Eclipse</name></plugin>'
+		request.xml = '<plugin><name>Eclipse</name><project>1</project></plugin>'
 		response.format = 'xml'
 		controller.save()
 
@@ -103,5 +103,7 @@ class PluginRestControllerSpec extends Specification {
 	def setup() {		
 		plugin1 = new Plugin(name: "Java").save(failOnError: true)
 		plugin2 = new Plugin(name: "Groovy").save(failOnError: true)
+		
+		def project = new Project(name: "UT Project", description: "Unit test mock project").save(failOnError: true)
 	}
 }

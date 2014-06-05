@@ -1,4 +1,4 @@
-package com.iadams.BuildMgmt;
+package com.iadams.BuildMgmt
 
 import geb.spock.GebReportingSpec
 import spock.lang.Stepwise

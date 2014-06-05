@@ -7,6 +7,8 @@ class Project {
 	
 	static hasMany = [ builds : Build,  tasks : Task, plugins : Plugin ]
 	
+	static belongsTo = [ Plugin, Task ]
+	
     static constraints = {
     }
 }

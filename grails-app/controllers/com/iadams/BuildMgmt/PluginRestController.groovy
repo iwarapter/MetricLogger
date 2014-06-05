@@ -37,6 +37,8 @@ class PluginRestController {
 		if(plug.validate() && plug.save()) {
 			response.status = 201
 			body = [id: plug.id]
+			
+			plug.addToProjects(Project.get(params.plugin.project))
 		}
 		else {
 			response.status = 403
